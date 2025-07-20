@@ -30,7 +30,7 @@ export const LoginForm = () => {
             <Building2 className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-foreground">
-            Sistema de Condomínio
+            Portal do Condomínio
           </CardTitle>
           <CardDescription className="text-muted-foreground">
             Entre com suas credenciais para acessar o sistema
