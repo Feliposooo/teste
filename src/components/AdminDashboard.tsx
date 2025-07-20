@@ -19,6 +19,7 @@ import { UserManagement } from './admin/UserManagement';
 import { VisitorsList } from './admin/VisitorsList';
 import { CorrespondencesList } from './admin/CorrespondencesList';
 import { CommunicationsManagement } from './admin/CommunicationsManagement';
+import { ThemeSelector } from './ThemeSelector';
 import { 
   getUsers, 
   getVisitors, 
@@ -52,14 +53,17 @@ export const AdminDashboard = () => {
               </div>
             </div>
             
-            <Button 
-              variant="outline" 
-              onClick={logout}
-              className="flex items-center space-x-2"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sair</span>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <ThemeSelector />
+              <Button 
+                variant="outline" 
+                onClick={logout}
+                className="flex items-center space-x-2"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sair</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>

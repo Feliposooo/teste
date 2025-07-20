@@ -8,45 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 15% 20%;
+    /* Tema Campos do Jordão - Tons terrosos e montanhosos */
+    --background: 45 15% 96%;
+    --foreground: 25 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 20%;
+    --card-foreground: 25 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 20%;
+    --popover-foreground: 25 30% 15%;
 
-    --primary: 217 91% 60%;
+    --primary: 140 40% 35%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 70%;
+    --primary-glow: 140 40% 45%;
 
-    --secondary: 214 32% 91%;
-    --secondary-foreground: 217 33% 17%;
+    --secondary: 35 25% 88%;
+    --secondary-foreground: 25 30% 20%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 40 15% 92%;
+    --muted-foreground: 25 15% 45%;
 
-    --accent: 217 91% 95%;
-    --accent-foreground: 217 33% 17%;
+    --accent: 140 35% 90%;
+    --accent-foreground: 25 30% 20%;
 
-    --success: 142 76% 36%;
+    --success: 120 60% 35%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 92% 50%;
+    --warning: 35 85% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --border: 35 20% 85%;
+    --input: 35 20% 85%;
+    --ring: 140 40% 35%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
-    --gradient-background: linear-gradient(180deg, hsl(var(--background)), hsl(210 40% 96%));
+    /* Gradientes Campos do Jordão */
+    --gradient-primary: linear-gradient(135deg, hsl(140 40% 35%), hsl(140 40% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 15% 96%));
+    --gradient-background: linear-gradient(180deg, hsl(45 15% 96%), hsl(40 20% 92%));
+    --gradient-mountain: linear-gradient(180deg, hsl(140 30% 85%), hsl(140 20% 75%));
 
     --radius: 0.5rem;
 
@@ -104,6 +106,79 @@ All colors MUST be HSL.
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+}
+
+/* Tema Moderno Azul */
+[data-theme="modern"] {
+  --background: 210 20% 98%;
+  --foreground: 220 15% 20%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  --primary-glow: 217 91% 70%;
+  --secondary: 214 32% 91%;
+  --secondary-foreground: 217 33% 17%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 217 91% 95%;
+  --accent-foreground: 217 33% 17%;
+  --success: 142 76% 36%;
+  --warning: 38 92% 50%;
+  --destructive: 0 84% 60%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 217 91% 60%;
+  --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));
+  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
+  --gradient-background: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 40% 96%));
+}
+
+/* Tema Elegante Púrpura */
+[data-theme="elegant"] {
+  --background: 300 15% 96%;
+  --foreground: 280 30% 15%;
+  --primary: 270 50% 45%;
+  --primary-foreground: 0 0% 100%;
+  --primary-glow: 270 50% 55%;
+  --secondary: 290 25% 88%;
+  --secondary-foreground: 280 30% 20%;
+  --muted: 295 15% 92%;
+  --muted-foreground: 280 15% 45%;
+  --accent: 270 35% 90%;
+  --accent-foreground: 280 30% 20%;
+  --success: 120 60% 35%;
+  --warning: 35 85% 50%;
+  --destructive: 0 75% 55%;
+  --border: 290 20% 85%;
+  --input: 290 20% 85%;
+  --ring: 270 50% 45%;
+  --gradient-primary: linear-gradient(135deg, hsl(270 50% 45%), hsl(270 50% 55%));
+  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(300 15% 96%));
+  --gradient-background: linear-gradient(180deg, hsl(300 15% 96%), hsl(295 20% 92%));
+}
+
+/* Tema Sunset Laranja */
+[data-theme="sunset"] {
+  --background: 25 20% 96%;
+  --foreground: 15 35% 15%;
+  --primary: 15 75% 55%;
+  --primary-foreground: 0 0% 100%;
+  --primary-glow: 25 75% 65%;
+  --secondary: 35 30% 88%;
+  --secondary-foreground: 15 35% 20%;
+  --muted: 30 20% 92%;
+  --muted-foreground: 20 20% 45%;
+  --accent: 20 45% 90%;
+  --accent-foreground: 15 35% 20%;
+  --success: 120 60% 35%;
+  --warning: 35 85% 50%;
+  --destructive: 0 75% 55%;
+  --border: 30 25% 85%;
+  --input: 30 25% 85%;
+  --ring: 15 75% 55%;
+  --gradient-primary: linear-gradient(135deg, hsl(15 75% 55%), hsl(25 75% 65%));
+  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(25 20% 96%));
+  --gradient-background: linear-gradient(180deg, hsl(25 20% 96%), hsl(30 25% 92%));
+}
 }
 
 @layer base {

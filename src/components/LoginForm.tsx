@@ -29,7 +29,7 @@ export const LoginForm = () => {
           <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center">
             <Building2 className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-2xl font-bold text-foreground">
+          <CardTitle className="text-2xl font-bold text-foreground font-serif">
             Reserva Figueiredo
           </CardTitle>
           <CardDescription className="text-muted-foreground">

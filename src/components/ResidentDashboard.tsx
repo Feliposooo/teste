@@ -16,6 +16,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { VisitorManagement } from './resident/VisitorManagement';
 import { CorrespondenceView } from './resident/CorrespondenceView';
 import { CommunicationsView } from './resident/CommunicationsView';
+import { ThemeSelector } from './ThemeSelector';
 import { 
   getVisitors, 
   getCorrespondences,
@@ -52,14 +53,17 @@ export const ResidentDashboard = () => {
               </div>
             </div>
             
-            <Button 
-              variant="outline" 
-              onClick={logout}
-              className="flex items-center space-x-2"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sair</span>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <ThemeSelector />
+              <Button 
+                variant="outline" 
+                onClick={logout}
+                className="flex items-center space-x-2"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sair</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>
