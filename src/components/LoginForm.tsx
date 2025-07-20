@@ -83,16 +83,6 @@ export const LoginForm = () => {
               {isLoading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>
-          
-          <div className="mt-6 text-center space-y-2">
-            <div className="text-xs text-muted-foreground">
-              <strong>Dados para teste:</strong>
-            </div>
-            <div className="text-xs text-muted-foreground space-y-1">
-              <div>Admin: admin / admin123</div>
-              <div>Morador: apt101 / 123456</div>
-            </div>
-          </div>
         </CardContent>
       </Card>
     </div>
