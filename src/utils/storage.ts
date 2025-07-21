@@ -1,157 +1,131 @@
-import { User, Visitor, Correspondence, Communication } from '@/types/auth';
+import React, { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { getUsers, saveUsers } from "@/utils/storage";
 
-const STORAGE_KEYS = {
-  USERS: 'condominium_users',
-  VISITORS: 'condominium_visitors', 
-  CORRESPONDENCES: 'condominium_correspondences',
-  COMMUNICATIONS: 'condominium_communications'
-};
+interface User {
+  id: string;
+  login: string;
+  password?: string;
+  type: string;
+  residenceNumber: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+}
 
-// Initialize default data
-const initializeDefaultData = () => {
-  // Default admin user
-  const defaultUsers: User[] = [
-    {
-      id: 'admin-001',
-      login: 'admin',
-      password: 'admin123',
-      type: 'admin',
-      name: 'Administrador',
-      email: 'admin@condominio.com'
-    },
-    {
-      id: 'res-001',
-      login: 'apt101',
-      password: '123456',
-      type: 'resident',
-      residenceNumber: '101',
-      name: 'João Silva',
-      email: 'joao@email.com',
-      phone: '(11) 99999-9999'
-    },
-    {
-      id: 'res-002',
-      login: 'apt102',
-      password: '123456',
-      type: 'resident',
-      residenceNumber: '102',
-      name: 'Maria Santos',
-      email: 'maria@email.com',
-      phone: '(11) 88888-8888'
+export default function UserManagement() {
+  const [formData, setFormData] = useState({
+    name: "",
+    apartment: "",
+    email: "",
+    phone: "",
+  });
+
+  const [residents, setResidents] = useState<User[]>([]);
+
+  useEffect(() => {
+    const users = getUsers();
+    const residentUsers = users.filter(u => u.type === "resident");
+    setResidents(residentUsers);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.apartment) {
+      alert("Apartamento é obrigatório.");
+      return;
     }
-  ];
 
-  const defaultCommunications: Communication[] = [
-    {
-      id: 'comm-001',
-      title: 'Manutenção do Elevador',
-      content: 'Informamos que o elevador social passará por manutenção preventiva no dia 25/01/2024 das 8h às 17h. Pedimos a compreensão de todos.',
-      date: new Date().toISOString(),
-      author: 'Administração',
-      priority: 'high'
-    },
-    {
-      id: 'comm-002',
-      title: 'Nova Política de Visitantes',
-      content: 'A partir do próximo mês, todos os visitantes deverão ser cadastrados no sistema antes da visita. Consulte o regulamento completo na portaria.',
-      date: new Date(Date.now() - 86400000).toISOString(),
-      author: 'Síndico',
-      priority: 'medium'
-    }
-  ];
+    const users = getUsers();
+    const newUser: User = {
+      id: `res-${Date.now()}`,
+      login: `apt${formData.apartment}`,
+      password: "123456", // senha padrão
+      type: "resident",
+      residenceNumber: formData.apartment,
+      name: formData.name.trim() || undefined,
+      email: formData.email.trim() || undefined,
+      phone: formData.phone.trim() || undefined,
+    };
 
-  if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
-    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(defaultUsers));
-  }
-  
-  if (!localStorage.getItem(STORAGE_KEYS.VISITORS)) {
-    localStorage.setItem(STORAGE_KEYS.VISITORS, JSON.stringify([]));
-  }
-  
-  if (!localStorage.getItem(STORAGE_KEYS.CORRESPONDENCES)) {
-    localStorage.setItem(STORAGE_KEYS.CORRESPONDENCES, JSON.stringify([]));
-  }
-  
-  if (!localStorage.getItem(STORAGE_KEYS.COMMUNICATIONS)) {
-    localStorage.setItem(STORAGE_KEYS.COMMUNICATIONS, JSON.stringify(defaultCommunications));
-  }
-};
+    const updatedUsers = [...users, newUser];
+    saveUsers(updatedUsers);
 
-// Users
-export const getUsers = (): User[] => {
-  initializeDefaultData();
-  const users = localStorage.getItem(STORAGE_KEYS.USERS);
-  return users ? JSON.parse(users) : [];
-};
-
-export const saveUsers = (users: User[]) => {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
-};
-
-export const getUserByLogin = (login: string): User | null => {
-  const users = getUsers();
-  return users.find(user => user.login === login) || null;
-};
-
-// Visitors
-export const getVisitors = (): Visitor[] => {
-  const visitors = localStorage.getItem(STORAGE_KEYS.VISITORS);
-  return visitors ? JSON.parse(visitors) : [];
-};
-
-export const saveVisitors = (visitors: Visitor[]) => {
-  localStorage.setItem(STORAGE_KEYS.VISITORS, JSON.stringify(visitors));
-};
-
-export const addVisitor = (visitor: Omit<Visitor, 'id'>) => {
-  const visitors = getVisitors();
-  const newVisitor: Visitor = {
-    ...visitor,
-    id: `visitor-${Date.now()}`
+    setResidents(prev => [...prev, newUser]);
+    setFormData({ name: "", apartment: "", email: "", phone: "" });
   };
-  visitors.push(newVisitor);
-  saveVisitors(visitors);
-  return newVisitor;
-};
 
-// Correspondences
-export const getCorrespondences = (): Correspondence[] => {
-  const correspondences = localStorage.getItem(STORAGE_KEYS.CORRESPONDENCES);
-  return correspondences ? JSON.parse(correspondences) : [];
-};
-
-export const saveCorrespondences = (correspondences: Correspondence[]) => {
-  localStorage.setItem(STORAGE_KEYS.CORRESPONDENCES, JSON.stringify(correspondences));
-};
-
-export const addCorrespondence = (correspondence: Omit<Correspondence, 'id'>) => {
-  const correspondences = getCorrespondences();
-  const newCorrespondence: Correspondence = {
-    ...correspondence,
-    id: `correspondence-${Date.now()}`
+  const handleDelete = (id: string) => {
+    const users = getUsers();
+    const filteredUsers = users.filter(u => u.id !== id);
+    saveUsers(filteredUsers);
+    setResidents(residents.filter(r => r.id !== id));
   };
-  correspondences.push(newCorrespondence);
-  saveCorrespondences(correspondences);
-  return newCorrespondence;
-};
 
-// Communications
-export const getCommunications = (): Communication[] => {
-  const communications = localStorage.getItem(STORAGE_KEYS.COMMUNICATIONS);
-  return communications ? JSON.parse(communications) : [];
-};
+  return (
+    <div className="p-4 max-w-xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4">Cadastrar novo morador</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium">Nome do morador (opcional)</label>
+          <Input
+            id="name"
+            value={formData.name}
+            onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+            placeholder="Digite o nome (opcional)"
+          />
+        </div>
 
-export const saveCommunications = (communications: Communication[]) => {
-  localStorage.setItem(STORAGE_KEYS.COMMUNICATIONS, JSON.stringify(communications));
-};
+        <div>
+          <label htmlFor="apartment" className="block text-sm font-medium">Apartamento *</label>
+          <Input
+            id="apartment"
+            value={formData.apartment}
+            onChange={(e) => setFormData(prev => ({ ...prev, apartment: e.target.value }))}
+            required
+          />
+        </div>
 
-export const addCommunication = (communication: Omit<Communication, 'id'>) => {
-  const communications = getCommunications();
-  const newCommunication: Communication = {
-    ...communication,
-    id: `communication-${Date.now()}`
-  };
-  communications.unshift(newCommunication); // Add to beginning
-  saveCommunications(communications);
-  return newCommunication;
-};
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium">E-mail (opcional)</label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+            placeholder="E-mail (opcional)"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium">Telefone (opcional)</label>
+          <Input
+            id="phone"
+            value={formData.phone}
+            onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+            placeholder="Telefone (opcional)"
+          />
+        </div>
+
+        <Button type="submit" className="mt-4">Salvar morador</Button>
+      </form>
+
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-2">Moradores cadastrados</h3>
+        {residents.length === 0 ? (
+          <p>Nenhum morador cadastrado.</p>
+        ) : (
+          <ul>
+            {residents.map(r => (
+              <li key={r.id} className="flex justify-between items-center py-1 border-b">
+                <span>{r.name ?? "(Sem nome)"} - Apt {r.residenceNumber}</span>
+                <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Remover</Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
