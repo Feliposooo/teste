@@ -15,7 +15,7 @@ import {
   Mail
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { UserManagement } from './admin/UserManagement';
+import UserManagement from './admin/UserManagement'; // Importação corrigida (sem chaves)
 import { VisitorsList } from './admin/VisitorsList';
 import { CorrespondencesList } from './admin/CorrespondencesList';
 import { CommunicationsManagement } from './admin/CommunicationsManagement';
