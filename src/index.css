@@ -179,7 +179,6 @@ All colors MUST be HSL.
   --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(25 20% 96%));
   --gradient-background: linear-gradient(180deg, hsl(25 20% 96%), hsl(30 25% 92%));
 }
-}
 
 @layer base {
   * {
