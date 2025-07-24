@@ -1,10 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
 export interface User {
   id: number;
   name: string;
   apartment: string;
+  email?: string;
+  phone?: string;
 }
 
 const STORAGE_KEY = "condo_users";
@@ -36,4 +35,10 @@ export function updateUser(updatedUser: User): void {
 export function deleteUser(userId: number): void {
   const users = getUsers().filter((user) => user.id !== userId);
   saveUsers(users);
+}
+
+// Função adicionada para buscar usuário pelo nome (login)
+export function getUserByLogin(name: string): User | undefined {
+  const users = getUsers();
+  return users.find(user => user.name === name);
 }
