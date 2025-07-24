@@ -1,33 +1,23 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./contexts/AuthContext";
-import { ThemeProvider } from "./contexts/ThemeContext";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import AdminDashboard from './components/AdminDashboard';
+import ResidentDashboard from './components/ResidentDashboard';
+import { initializeDefaultUsers } from './utils/storage';
 
-const queryClient = new QueryClient();
+initializeDefaultUsers(); // Garante que o usuário admin seja criado se não existir
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/resident" element={<ResidentDashboard />} />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;
