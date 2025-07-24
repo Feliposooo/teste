@@ -22,6 +22,13 @@ export interface Communication {
   date: string;
 }
 
+export interface Visitor {
+  id: number;
+  name: string;
+  apartment: string;
+  visitDate: string;
+}
+
 // USERS
 export function getUsers(): User[] {
   const data = localStorage.getItem('users');
@@ -66,4 +73,20 @@ export function addCommunication(communication: Communication): void {
   const communications = getCommunications();
   communications.push(communication);
   saveCommunications(communications);
+}
+
+// VISITORS
+export function getVisitors(): Visitor[] {
+  const data = localStorage.getItem('visitors');
+  return data ? JSON.parse(data) : [];
+}
+
+export function saveVisitors(visitors: Visitor[]): void {
+  localStorage.setItem('visitors', JSON.stringify(visitors));
+}
+
+export function addVisitor(visitor: Visitor): void {
+  const visitors = getVisitors();
+  visitors.push(visitor);
+  saveVisitors(visitors);
 }
