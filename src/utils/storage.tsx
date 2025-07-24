@@ -1,43 +1,38 @@
-export interface User {
+export interface Visitor {
   id: number;
   name: string;
-  apartment: string;
-  login?: string; // adicione essa propriedade se for usada para login
+  residenceNumber: string;
+  status: 'inside' | 'outside';
+  entryTime: string;
 }
 
-const STORAGE_KEY = "condo_users";
+const VISITORS_STORAGE_KEY = "condo_visitors";
 
-export function getUsers(): User[] {
+export function getVisitors(): Visitor[] {
   if (typeof window === "undefined") return [];
-  const data = localStorage.getItem(STORAGE_KEY);
+  const data = localStorage.getItem(VISITORS_STORAGE_KEY);
   return data ? JSON.parse(data) : [];
 }
 
-export function saveUsers(users: User[]): void {
+export function saveVisitors(visitors: Visitor[]): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+  localStorage.setItem(VISITORS_STORAGE_KEY, JSON.stringify(visitors));
 }
 
-export function addUser(user: User): void {
-  const users = getUsers();
-  users.push(user);
-  saveUsers(users);
+export function addVisitor(visitor: Visitor): void {
+  const visitors = getVisitors();
+  visitors.push(visitor);
+  saveVisitors(visitors);
 }
 
-export function updateUser(updatedUser: User): void {
-  const users = getUsers().map((user) =>
-    user.id === updatedUser.id ? updatedUser : user
+export function updateVisitor(updatedVisitor: Visitor): void {
+  const visitors = getVisitors().map(visitor =>
+    visitor.id === updatedVisitor.id ? updatedVisitor : visitor
   );
-  saveUsers(users);
+  saveVisitors(visitors);
 }
 
-export function deleteUser(userId: number): void {
-  const users = getUsers().filter((user) => user.id !== userId);
-  saveUsers(users);
-}
-
-// Função requerida pelo AuthContext.tsx
-export function getUserByLogin(login: string): User | undefined {
-  const users = getUsers();
-  return users.find(user => user.login === login);
+export function deleteVisitor(visitorId: number): void {
+  const visitors = getVisitors().filter(visitor => visitor.id !== visitorId);
+  saveVisitors(visitors);
 }
