@@ -2,8 +2,7 @@ export interface User {
   id: number;
   name: string;
   apartment: string;
-  email?: string;
-  phone?: string;
+  login?: string; // adicione essa propriedade se for usada para login
 }
 
 const STORAGE_KEY = "condo_users";
@@ -37,8 +36,8 @@ export function deleteUser(userId: number): void {
   saveUsers(users);
 }
 
-// Função adicionada para buscar usuário pelo nome (login)
-export function getUserByLogin(name: string): User | undefined {
+// Função requerida pelo AuthContext.tsx
+export function getUserByLogin(login: string): User | undefined {
   const users = getUsers();
-  return users.find(user => user.name === name);
+  return users.find(user => user.login === login);
 }
